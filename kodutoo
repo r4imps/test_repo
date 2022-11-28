@@ -1,36 +1,45 @@
 import csv
 import string
-group_size = 4
+
 file = open("nimed.csv")
 tähestik = string.ascii_letters + "ÕõÄäÖöÜü "
-print(tähestik)
+initial_csv = csv.reader(file)
 
-csvreader = csv.reader(file)
+group_size = 3
+assert group_size > 0 ," ryhmad liiga vaikesed"
+
+header = []
+header = next(initial_csv)
+
 class Person:
-    def __init__(self):
-        pass
-
-    header = []
-    header = next(csvreader)
-    header
-
-    
-   
-
-    def file_check():
-        rows = []
-        for row in csvreader:
-            rows.append(row)
-            row_content = []
-            for word in row:
-                row_content.append(word)
-            tmp = list(row_content[0])
-            tmp += list(row_content[1])
-            for sym in tmp:
+    def __init__(self, first_name, last_name, age):
+        self.__first_name = first_name
+        self.__last_name = last_name
+        self.__age = age
+        for sym in self.__first_name and self.__last_name:
                 assert sym in tähestik, "sisaldab tundmatuid symboleid"
-            assert 0 < int(row_content [2]) < 100, "keegi liiga vana"
+        assert 0 < int(self.__age) < 100, "keegi liiga vana"
+        pass
+    def first_name(self):
+        return self.__first_name
+    def last_name(self):
+        return self.__last_name
+    def age(self):
+        return self.__age
 
-    file_check()
+def groups(initial_csv, group_size):
+    i = 0
+    N = 1
+    new_file = open("group" + str(N) + ".csv", "w")
+    writer = csv.writer(new_file)
+    for data in initial_csv:
+        writer.writerow(data + "\n")
+        i += 1
+        while i == group_size:
+            new_file.close()
+            N += 1
+            i = 0
             
-
+groups(initial_csv, group_size)
+    
 file.close()
