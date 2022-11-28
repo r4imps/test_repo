@@ -1,0 +1,36 @@
+import csv
+import string
+group_size = 4
+file = open("nimed.csv")
+tähestik = string.ascii_letters + "ÕõÄäÖöÜü "
+print(tähestik)
+
+csvreader = csv.reader(file)
+class Person:
+    def __init__(self):
+        pass
+
+    header = []
+    header = next(csvreader)
+    header
+
+    
+   
+
+    def file_check():
+        rows = []
+        for row in csvreader:
+            rows.append(row)
+            row_content = []
+            for word in row:
+                row_content.append(word)
+            tmp = list(row_content[0])
+            tmp += list(row_content[1])
+            for sym in tmp:
+                assert sym in tähestik, "sisaldab tundmatuid symboleid"
+            assert 0 < int(row_content [2]) < 100, "keegi liiga vana"
+
+    file_check()
+            
+
+file.close()
